@@ -231,12 +231,6 @@ for i=1:N_v     % set of origins and destinations for vehicle i
         d(i)=unidrnd(N_n);
     end   
     
-    if i==1
-       o(i)=7;d(i)=6;
-    else
-        o(i)=7;d(i)=8;
-    end
-    
     % Now we compute the shortest path between o(i) and d(i)
     iniPathNodes{i,1} = shortestpath(Net,o(i),d(i)); 
     
@@ -294,17 +288,8 @@ end
 % node 8
 [S_0(2,29),S_0(2,30)]=deal(1);
 
-% %% Define u_rho, u_T of the first interval of day 1
-% 
-% % u_rho, u_T are the the duty cycle (portion of green) and the cycle period 
-% % u_rho u_T for N traffic lights in day 1, period 1 
+%% Define u_rho, u_T of the first interval of day 1
 global u_rho u_T
-% u_rho(1) = 0.2;
-% u_T(1) = 30;
-% for i=2:N
-%     u_rho(i) = u_rho(i-1) + 0.01;  % the duty cycle (portion of green)
-%     u_T(i) =u_T(i-1) + 10;         % the cycle period
-% end
 
 %% constrains of u_rho, u_T
 
@@ -370,17 +355,6 @@ S_0(1,31)=clear_t(7);
 [u_T(29),u_T(30)]=deal(60);
 [u_rho(29),u_rho(30)]=deal(0.5);
 
-
-
-% u_rho=zeros(1,N);
-% u_rho(1:N)=1;
-% u_T=zeros(1,N);
-% u_T(1:N)=1;
-% u_rho(17)=0.03;
-% u_T(17)=500;
-
-
-
 for i=1:N
     X0=[X0;S_0(:,i)]  ;
 end
@@ -396,7 +370,6 @@ for i=1:N_v
                 S0_v(7,i)=S0_v(7,j)+1;
             end
         end
-%       round((rand*(5-1)+1)*10)/10    unidrnd(Arc{3,a})
         % the initial state of vehicles are defined as follow:
         % the clock is set to 0
         % the velocity is a random number between 1 cell/sec and 5 cell/sec
@@ -409,10 +382,6 @@ for i=1:N_v
         % vehicle
         optTime(i)=totalCells(i)/ S0_v(2,i);
 end
-
-S0_v(2,1)=3.6;
-S0_v(2,2)=3.8;
-S0_v(2,3)=4.0;
 
 for i=1:N_v
     X0=[X0;S0_v(:,i)]  ;
